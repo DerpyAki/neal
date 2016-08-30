@@ -2,7 +2,7 @@
 
 var Discord = require("discord.js");
 var bot = new Discord.Client();
-var prefix = "::"; //This is change able only in the " " part obsly || This is also your bots prefix made by Beta
+var prefix = "::"; 
 
 bot.on('ready', function () {
   console.log('Bot online and ready ' + bot.servers.length + ' Servers and ' + bot.channels.length + ' Channels')
@@ -84,7 +84,7 @@ if (message.content.startsWith('gamechange')) {
  }
 
   if (message.content.startsWith(prefix + "uptime")) {
-    bot.sendMessage(message, "Uptime: " + toHHMMSS(bot.uptime / 1000))
+    bot.sendMessage(message, "uptime: " + toHHMMSS(bot.uptime / 1000))
   }
 
  if (message.content.startsWith(prefix + "help")) {
@@ -360,22 +360,18 @@ if (message.content.startsWith(prefix + "verify"))
   }
 
 if (message.content.startsWith(prefix + "clear")) {
-        if (bot.memberHasRole(message.author, message.server.roles.get("name", "Bot Commander")) || isCommander.indexOf(message.sender.id) > -1){
-            console.log(message.sender.username + " executed: clear");
-            var num = message.content.split(" ").splice(1).join(" ");
-            if(!isNaN(num)){
-                bot.getChannelLogs(message.channel, num, (err, messages) => {
-                    bot.deleteMessages(messages)
-                    if (err) {
-                        bot.sendMessage(message, "I don't have permission to delete message.")
-                    } else {
-                        bot.sendMessage(message, "Deleting => `" + messagecount + "` <= messages")
-                    }
-                })
-            }
-        }
-    }
+     var messagecount = parseInt(message.content.split(' ')[1]);
 
-
+      if (isCommander === true) {
+      bot.getChannelLogs(message.channel, messagecount, (err, messages) => {
+      bot.deleteMessages(messages)
+      if (err) {
+        bot.sendMessage(message, "I don't have permission to delete message.")
+      } else {
+        bot.sendMessage(message, "Deleting => `" + messagecount + "` <= messages")
+      }
+    })
+  }
+}
 
 });

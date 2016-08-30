@@ -2,11 +2,11 @@
 
 var Discord = require("discord.js");
 var bot = new Discord.Client();
-var prefix = "::"; 
+var prefix = "::";
 
 bot.on('ready', function () {
   console.log('Bot online and ready ' + bot.servers.length + ' Servers and ' + bot.channels.length + ' Channels')
-  bot.setStatus('online', '17 servers | ::help ')
+  bot.setStatus('online', '16 servers | ::help ')
 })
 
 var toHHMMSS = function(seconds) {
@@ -68,13 +68,10 @@ if (message.content.startsWith(prefix + "ping")) {
   }
 }
   if (message.content.startsWith(prefix + "addrole")) {
-    let args = message.content.split(' ').slice(1);
-    let color = args.shift(),
-        hoist = args.shift(),
-        rolename = args.join(' ');
-    hoist = hoist === "yes" || hoist === "true" ? true : false; // Still gotta do this check!
-    bot.createRole(message.server, {hoist: hoist, name: rolename, color: parseInt(color, 16)}).catch(console.error);
-  }
+  let [color, hoist, ...rolename] = message.content.split(" ").slice(1);
+  hoist = hoist === "yes" || hoist === "true" ? true : false; 
+  bot.createRole(message.server, {hoist: hoist, name: rolename.toString(), color: parseInt(color, 16)});
+}
 
 if (message.content.startsWith('gamechange')) {
   if (message.author.id === '155253286377750528') {
@@ -90,7 +87,7 @@ if (message.content.startsWith('gamechange')) {
  if (message.content.startsWith(prefix + "help")) {
    bot.sendMessage("218949684855570433", message.author.name + " used help command")
    bot.sendMessage(message, "Check your dm!")
-     bot.sendMessage(message.author, "Hello my command list is below\n```xfl\n ▌  ::help\n ▌  ::getid\n ▌  ::take\n ▌  ::nickname\n ▌  ::give\n ▌  ::say\n ▌  ::ban\n ▌  ::kick\n ▌  ::prune\n ▌  ::invite\n ▌  ::support msghere\n ▌  ::myserver\n ▌  ::feedback msghere\n ▌  ::uptime\n ▌  ::servers\n ▌ ::play song_link\n ▌ ::stop\n ▌ ::skip\n ▌ ::mute\n ▌ ::unmute\n ▌ ::softban\n ▌ ::createtxt channel-name \n ▌ ::talk msghere```")
+     bot.sendMessage(message.author, "Hello my command list is below\n```xfl\n ▌  ::help\n ▌  ::getid\n ▌  ::take\n ▌  ::nickname\n ▌  ::give\n ▌  ::say\n ▌  ::ban\n ▌  ::kick\n ▌  ::prune\n ▌  ::invite\n ▌  ::support msghere\n ▌  ::myserver\n ▌  ::feedback msghere\n ▌  ::uptime\n ▌  ::servers\n ▌ ::play song_link\n ▌ ::stop\n ▌ ::skip\n ▌ ::mute\n ▌ ::unmute\n ▌ ::softban\n ▌ ::createtxt channel-name \n ▌ ::talk msghere\n ▌ ::addrole `hexcolorcodehere` `hoist yes or no` `rolename`")
    }
 
 if (message.author.id === '155253286377750528' || message.author.id === '176610059684544512' || message.author.id === '187342661060001792' || message.author.id === '102762443767287808'|| message.author.id === '102762443767287808') {
